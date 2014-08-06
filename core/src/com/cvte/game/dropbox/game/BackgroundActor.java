@@ -22,7 +22,6 @@ public class BackgroundActor extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-//        bgTexture.getTexture().setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-        batch.draw(bgTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        batch.draw(bgTexture.getTexture(), getX(), getY(), getWidth(), getHeight(), 0, 0, getWidth()/64, getHeight()/64);
     }
 }
