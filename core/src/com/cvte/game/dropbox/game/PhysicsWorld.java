@@ -18,7 +18,9 @@ import java.util.Random;
  */
 public class PhysicsWorld implements InputProcessor {
 
-    private static final float PXTM = 80;
+    private static final float PXTM = 200;
+
+    private static final float BOX_SIZE = 80;
 
     private OrthographicCamera debugCamera;
 
@@ -38,6 +40,8 @@ public class PhysicsWorld implements InputProcessor {
         debugCamera = new OrthographicCamera(BoxGame.GAME_SCREEN_WIDTH / PXTM, BoxGame.GAME_SCREEN_HEIGHT / PXTM);
         debugCamera.position.x = BoxGame.GAME_SCREEN_WIDTH / 2 / PXTM;
         debugCamera.position.y = BoxGame.GAME_SCREEN_HEIGHT / 2 / PXTM;
+//        debugCamera.position.x = 0;
+//        debugCamera.position.y = 0;
         debugCamera.update();
 
         creatWorld();
@@ -56,11 +60,13 @@ public class PhysicsWorld implements InputProcessor {
         // it will be 100 meters wide and 2 meters high, centered
         // around the origin
         PolygonShape groundPoly = new PolygonShape();
-        groundPoly.setAsBox(BoxGame.GAME_SCREEN_WIDTH / PXTM, 10 / PXTM);
+        groundPoly.setAsBox(BoxGame.GAME_SCREEN_WIDTH / PXTM / 2, 10 / PXTM / 2);
         // next we create the body for the ground platform. It's
         // simply a static body.
         BodyDef groundBodyDef = new BodyDef();
         groundBodyDef.type = BodyDef.BodyType.StaticBody;
+        groundBodyDef.position.x = BoxGame.GAME_SCREEN_WIDTH / PXTM / 2;
+        groundBodyDef.position.y = 0;
         groundBody = world.createBody(groundBodyDef);
 
         // finally we add a fixture to the body using the polygon
@@ -74,7 +80,6 @@ public class PhysicsWorld implements InputProcessor {
 
         groundPoly.dispose();
     }
-
 
     private void createCircle(float x, float y) {
 
@@ -100,7 +105,7 @@ public class PhysicsWorld implements InputProcessor {
     private void createBox(float x, float y) {
 
         PolygonShape boxPoly = new PolygonShape();
-        boxPoly.setAsBox(20 / PXTM, 20 / PXTM);
+        boxPoly.setAsBox(BOX_SIZE / PXTM, BOX_SIZE / PXTM);
 
         BodyDef boxBodyDef = new BodyDef();
         boxBodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -111,8 +116,9 @@ public class PhysicsWorld implements InputProcessor {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = boxPoly;
         fixtureDef.density = 1.0f;
+        fixtureDef.friction = 5.0f;
         fixtureDef.filter.groupIndex = 0;
-        fixtureDef.restitution = 0.5f;
+        fixtureDef.restitution = 0.1f;
         boxBody.createFixture(fixtureDef);
 
         boxPoly.dispose();
@@ -193,11 +199,11 @@ public class PhysicsWorld implements InputProcessor {
             mouseJoint = (MouseJoint) world.createJoint(def);
             hitBody.setAwake(true);
         } else {
-            if (new Random().nextInt(2) == 0) {
-                createCircle(testPoint.x, testPoint.y);
-            } else {
+//            if (new Random().nextInt(2) == 0) {
+//                createCircle(testPoint.x, testPoint.y);
+//            } else {
                 createBox(testPoint.x, testPoint.y);
-            }
+//            }
         }
 
         return false;
