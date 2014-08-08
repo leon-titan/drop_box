@@ -23,7 +23,7 @@ public class GameScreen implements Screen {
         gameStage = new Stage(new StretchViewport(BoxGame.GAME_SCREEN_WIDTH, BoxGame.GAME_SCREEN_HEIGHT));
 
         bgActor = new BackgroundActor();
-        bgActor.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        bgActor.setSize(gameStage.getWidth(), gameStage.getHeight());
         bgActor.setPosition(0, 0);
 
         gameStage.addActor(bgActor);
