@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.cvte.game.dropbox.BoxGame;
 
 /**
  * Created by cvtpc on 2014/8/5.
@@ -15,9 +16,11 @@ public class GameScreen implements Screen {
     private Stage gameStage;
     private Actor bgActor;
 
+    private PhysicsWorld physicsWorld;
+
     public GameScreen() {
 
-        gameStage = new Stage(new StretchViewport(720, 1280));
+        gameStage = new Stage(new StretchViewport(BoxGame.GAME_SCREEN_WIDTH, BoxGame.GAME_SCREEN_HEIGHT));
 
         bgActor = new BackgroundActor();
         bgActor.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -25,14 +28,20 @@ public class GameScreen implements Screen {
 
         gameStage.addActor(bgActor);
 
-        Gdx.input.setInputProcessor(gameStage);
+        physicsWorld = new PhysicsWorld();
+
+        Gdx.input.setInputProcessor(physicsWorld);
     }
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
         gameStage.act(delta);
         gameStage.draw();
+
+        physicsWorld.render();
     }
 
     @Override

@@ -8,8 +8,8 @@ import com.cvte.game.dropbox.BoxGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.width = 720;
-        config.height = 1280;
+        config.width = (int) BoxGame.GAME_SCREEN_WIDTH;
+        config.height = (int) BoxGame.GAME_SCREEN_HEIGHT;
 		new LwjglApplication(new BoxGame(), config);
 	}
 }

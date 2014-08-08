@@ -9,6 +9,9 @@ import com.cvte.game.dropbox.game.GameScreen;
  */
 public class BoxGame extends Game {
 
+    public static final float GAME_SCREEN_WIDTH = 480;
+    public static final float GAME_SCREEN_HEIGHT = 800;
+
     private Screen curScreen;
 
     @Override
