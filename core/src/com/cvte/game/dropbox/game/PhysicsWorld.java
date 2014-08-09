@@ -50,7 +50,7 @@ public class PhysicsWorld implements InputProcessor {
 
         // we instantiate a new World with a proper gravity vector
         // and tell it to sleep when possible.
-        world = new World(new Vector2(0, -10), true);
+        world = new World(new Vector2(0, -10),  true);
         debugRenderer = new Box2DDebugRenderer();
 
         // next we create a static ground platform. This platform
