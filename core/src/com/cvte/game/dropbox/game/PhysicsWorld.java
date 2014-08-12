@@ -46,6 +46,7 @@ public class PhysicsWorld implements InputProcessor {
 
         creatWorld();
     }
+
     private void creatWorld() {
 
         // we instantiate a new World with a proper gravity vector
@@ -128,6 +129,7 @@ public class PhysicsWorld implements InputProcessor {
         world.step(Gdx.graphics.getDeltaTime(), 8, 3);
         debugRenderer.render(world, debugCamera.combined);
     }
+
     /**
      * we instantiate this vector and the callback here so we don't irritate the GC *
      */
