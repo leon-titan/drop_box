@@ -18,6 +18,8 @@ public class GameScreen implements Screen {
 
     private PhysicsWorld physicsWorld;
 
+    private BlockManager blockManager;
+
     public GameScreen() {
 
         gameStage = new Stage(new StretchViewport(BoxGame.GAME_SCREEN_WIDTH, BoxGame.GAME_SCREEN_HEIGHT));
@@ -29,6 +31,10 @@ public class GameScreen implements Screen {
         gameStage.addActor(bgActor);
 
         physicsWorld = new PhysicsWorld();
+
+        blockManager = new BlockManager();
+        blockManager.setScreen(this);
+        blockManager.addBlock();
 
         Gdx.input.setInputProcessor(physicsWorld);
     }
@@ -72,5 +78,13 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public Stage getGameStage() {
+        return gameStage;
+    }
+
+    public void setGameStage(Stage gameStage) {
+        this.gameStage = gameStage;
     }
 }
