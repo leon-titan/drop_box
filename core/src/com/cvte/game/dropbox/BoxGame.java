@@ -2,6 +2,7 @@ package com.cvte.game.dropbox;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.cvte.game.dropbox.game.Assets;
 import com.cvte.game.dropbox.game.GameScreen;
 
 /**
@@ -16,7 +17,14 @@ public class BoxGame extends Game {
 
     @Override
     public void create() {
+        Assets.loadTexture();
         curScreen = new GameScreen();
         setScreen(curScreen);
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        Assets.dispose();
     }
 }

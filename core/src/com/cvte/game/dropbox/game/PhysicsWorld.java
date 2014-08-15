@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
@@ -12,21 +13,24 @@ import com.badlogic.gdx.physics.box2d.joints.MouseJointDef;
 import com.cvte.game.dropbox.BoxGame;
 
 import java.util.Random;
+import java.util.Vector;
 
 /**
  * Created by cvtpc on 2014/8/8.
  */
 public class PhysicsWorld implements InputProcessor {
 
-    private static final float PXTM = 200;
+    public static final float PXTM = 200;
 
-    private static final float BOX_SIZE = 80;
+    private static final float BOX_SIZE = 83;
 
     private OrthographicCamera debugCamera;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private Body groundBody;
+
+    private Vector<Body> bodies;
 
     /**
      * our mouse joint *
@@ -43,6 +47,8 @@ public class PhysicsWorld implements InputProcessor {
 //        debugCamera.position.x = 0;
 //        debugCamera.position.y = 0;
         debugCamera.update();
+
+        bodies = new Vector<Body>();
 
         creatWorld();
     }
@@ -103,7 +109,7 @@ public class PhysicsWorld implements InputProcessor {
         wheelShape.dispose();
     }
 
-    private void createBox(float x, float y) {
+    public void createBox(float x, float y, Block block) {
 
         PolygonShape boxPoly = new PolygonShape();
         boxPoly.setAsBox(BOX_SIZE / PXTM, BOX_SIZE / PXTM);
@@ -122,12 +128,21 @@ public class PhysicsWorld implements InputProcessor {
         fixtureDef.restitution = 0.1f;
         boxBody.createFixture(fixtureDef);
 
+        boxBody.setUserData(block);
+
+        bodies.add(boxBody);
+
         boxPoly.dispose();
     }
 
     public void render(){
         world.step(Gdx.graphics.getDeltaTime(), 8, 3);
-        debugRenderer.render(world, debugCamera.combined);
+        for (Body body : bodies) {
+            Block block = (Block) body.getUserData();
+            block.setPosition(body.getPosition().x * PXTM - block.getActor().getWidth() / 2, body.getPosition().y * PXTM - block.getActor().getHeight() / 2);
+            block.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+        }
+//        debugRenderer.render(world, debugCamera.combined);
     }
 
     /**
@@ -204,7 +219,7 @@ public class PhysicsWorld implements InputProcessor {
 //            if (new Random().nextInt(2) == 0) {
 //                createCircle(testPoint.x, testPoint.y);
 //            } else {
-                createBox(testPoint.x, testPoint.y);
+//                createBox(testPoint.x, testPoint.y);
 //            }
         }
 

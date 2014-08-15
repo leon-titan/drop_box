@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cvte.game.dropbox.BoxGame;
 
@@ -20,6 +21,10 @@ public class GameScreen implements Screen {
 
     private BlockManager blockManager;
 
+    private GameInput input;
+
+    private Block slideBlock;
+
     public GameScreen() {
 
         gameStage = new Stage(new StretchViewport(BoxGame.GAME_SCREEN_WIDTH, BoxGame.GAME_SCREEN_HEIGHT));
@@ -34,9 +39,37 @@ public class GameScreen implements Screen {
 
         blockManager = new BlockManager();
         blockManager.setScreen(this);
-        blockManager.addBlock();
+        blockManager.setPhysicsWorld(physicsWorld);
 
-        Gdx.input.setInputProcessor(physicsWorld);
+        addSlideBlock();
+
+        input = new GameInput(this);
+        Gdx.input.setInputProcessor(input);
+    }
+
+    public void addSlideBlock() {
+        if (slideBlock != null) {
+            return;
+        }
+        slideBlock = new Block(BoxGame.GAME_SCREEN_WIDTH / 2, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
+        slideBlock.getActor().addAction(forever(sequence(
+                moveTo(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4, 1.5f),
+                moveTo(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), BoxGame.GAME_SCREEN_HEIGHT * 3 / 4, 1.5f))));
+        slideBlock.getActor().setColor(1, 1, 1, 0.5f);
+        gameStage.addActor(slideBlock.getActor());
+    }
+
+    public void dropBlock() {
+        if (slideBlock == null) {
+            return;
+        }
+//        slideBlock.getActor().clearActions();
+//        blockManager.addBlock(slideBlock);
+//        slideBlock = null;
+        blockManager.addBlock(slideBlock.getActor().getX(), slideBlock.getActor().getY());
+
+//        //TODO TEST
+//        addSlideBlock();
     }
 
     @Override
