@@ -1,6 +1,5 @@
 package com.cvte.game.dropbox.game;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
@@ -8,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
  * Created by cvtpc on 2014/8/12.
  */
 public class Block {
+
+    public static final float SIZE = 170;
 
     private Image blockImage;
 

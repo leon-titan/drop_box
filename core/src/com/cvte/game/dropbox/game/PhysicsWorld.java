@@ -44,8 +44,6 @@ public class PhysicsWorld implements InputProcessor {
         debugCamera = new OrthographicCamera(BoxGame.GAME_SCREEN_WIDTH / PXTM, BoxGame.GAME_SCREEN_HEIGHT / PXTM);
         debugCamera.position.x = BoxGame.GAME_SCREEN_WIDTH / 2 / PXTM;
         debugCamera.position.y = BoxGame.GAME_SCREEN_HEIGHT / 2 / PXTM;
-//        debugCamera.position.x = 0;
-//        debugCamera.position.y = 0;
         debugCamera.update();
 
         bodies = new Vector<Body>();

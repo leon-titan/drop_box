@@ -14,6 +14,12 @@ import com.cvte.game.dropbox.BoxGame;
  */
 public class GameScreen implements Screen {
 
+    public enum State{
+        READY,
+        START,
+        END,
+    }
+
     private Stage gameStage;
     private Actor bgActor;
 
@@ -24,6 +30,8 @@ public class GameScreen implements Screen {
     private GameInput input;
 
     private Block slideBlock;
+
+    private State state;
 
     public GameScreen() {
 
@@ -45,16 +53,42 @@ public class GameScreen implements Screen {
 
         input = new GameInput(this);
         Gdx.input.setInputProcessor(input);
+
+        state = State.READY;
+    }
+
+    public void start() {
+        if (state != State.READY) {
+            return;
+        }
+        state = State.START;
+        riseGroup(170);
+    }
+
+    public void riseGroup(final float height) {
+//        gameStage.getRoot().addAction(moveBy(0, -height, 2));
+//        slideBlock.getActor().addAction(moveBy(0, height, 2));
+//        bgActor.setSize(bgActor.getWidth(), bgActor.getHeight() + height);
+        final float time = 4f;
+        bgActor.setSize(bgActor.getWidth(), bgActor.getHeight() + height);
+        gameStage.getRoot().addAction(forever(sequence(moveBy(0, -height, time), run(new Runnable() {
+            @Override
+            public void run() {
+                bgActor.setSize(bgActor.getWidth(), bgActor.getHeight() + height);
+                slideBlock.getActor().addAction(moveBy(0, height, time));
+            }
+        }))));
+        slideBlock.getActor().addAction(moveBy(0, height, time));
     }
 
     public void addSlideBlock() {
         if (slideBlock != null) {
             return;
         }
-        slideBlock = new Block(BoxGame.GAME_SCREEN_WIDTH / 2, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
+        slideBlock = new Block(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
         slideBlock.getActor().addAction(forever(sequence(
-                moveTo(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4, 1.5f),
-                moveTo(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), BoxGame.GAME_SCREEN_HEIGHT * 3 / 4, 1.5f))));
+                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
+                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f))));
         slideBlock.getActor().setColor(1, 1, 1, 0.5f);
         gameStage.addActor(slideBlock.getActor());
     }
@@ -63,13 +97,7 @@ public class GameScreen implements Screen {
         if (slideBlock == null) {
             return;
         }
-//        slideBlock.getActor().clearActions();
-//        blockManager.addBlock(slideBlock);
-//        slideBlock = null;
         blockManager.addBlock(slideBlock.getActor().getX(), slideBlock.getActor().getY());
-
-//        //TODO TEST
-//        addSlideBlock();
     }
 
     @Override
@@ -85,7 +113,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        gameStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -115,9 +143,5 @@ public class GameScreen implements Screen {
 
     public Stage getGameStage() {
         return gameStage;
-    }
-
-    public void setGameStage(Stage gameStage) {
-        this.gameStage = gameStage;
     }
 }

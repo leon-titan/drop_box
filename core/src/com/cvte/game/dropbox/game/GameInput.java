@@ -1,6 +1,7 @@
 package com.cvte.game.dropbox.game;
 
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.cvte.game.dropbox.BoxGame;
 
 /**
@@ -9,13 +10,6 @@ import com.cvte.game.dropbox.BoxGame;
 public class GameInput extends InputAdapter {
 
     private GameScreen game;
-    private PhysicsWorld physicsWorld;
-
-    private BlockManager blockManager;
-
-    public GameInput(BlockManager blockManager) {
-        this.blockManager = blockManager;
-    }
 
     public GameInput(GameScreen game) {
         this.game = game;
@@ -23,9 +17,20 @@ public class GameInput extends InputAdapter {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        game.start();
         game.dropBlock();
-//        blockManager.addBlock(BoxGame.GAME_SCREEN_WIDTH / 2, BoxGame.GAME_SCREEN_HEIGHT * 4 / 5);
-//        blockManager.addBlock(screenX, BoxGame.GAME_SCREEN_HEIGHT - screenY);
+        return true;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        Group group = game.getGameStage().getRoot();
+        group.setOriginX(BoxGame.GAME_SCREEN_WIDTH / 2);
+        if (amount > 0) {
+            group.setScale(group.getScaleX() * 1.1f);
+        } else {
+            group.setScale(group.getScaleX() * 0.9f);
+        }
         return true;
     }
 }
