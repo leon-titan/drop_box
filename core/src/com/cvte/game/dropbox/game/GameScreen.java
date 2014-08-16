@@ -65,6 +65,34 @@ public class GameScreen implements Screen {
         riseGroup(170);
     }
 
+    public void end() {
+        if (state != State.START) {
+            return;
+        }
+        state = State.END;
+
+        restart();
+    }
+
+    public void restart() {
+        if (state != State.END) {
+            return;
+        }
+
+        blockManager.clearBlock();
+
+        gameStage.getRoot().setY(0);
+        gameStage.getRoot().clearActions();
+
+        slideBlock.getActor().setPosition(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
+        slideBlock.getActor().clearActions();
+        slideBlock.getActor().addAction(forever(sequence(
+                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
+                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f))));
+
+        state = State.READY;
+    }
+
     public void riseGroup(final float height) {
 //        gameStage.getRoot().addAction(moveBy(0, -height, 2));
 //        slideBlock.getActor().addAction(moveBy(0, height, 2));
@@ -109,6 +137,13 @@ public class GameScreen implements Screen {
         gameStage.draw();
 
         physicsWorld.render();
+
+        Block block = blockManager.getLastBlock();
+        if (block != null) {
+            if (block.getActor().getY() + gameStage.getRoot().getY() < -170) {
+                end();
+            }
+        }
     }
 
     @Override

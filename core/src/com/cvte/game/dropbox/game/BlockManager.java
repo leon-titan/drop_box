@@ -10,11 +10,10 @@ public class BlockManager {
     private GameScreen screen;
     private PhysicsWorld physicsWorld;
 
-    private float curLevelUpLine;
+    private Block lastBlock;
 
     public BlockManager() {
         blocks = new Vector<Block>();
-        curLevelUpLine = 6 * Block.SIZE;
     }
 
     public void addBlock(float x, float y) {
@@ -27,6 +26,19 @@ public class BlockManager {
         screen.getGameStage().addActor(block.getActor());
         physicsWorld.createBox((block.getActor().getX() + block.getActor().getWidth() / 2) / PhysicsWorld.PXTM,
                 (block.getActor().getY() + block.getActor().getHeight() / 2) / PhysicsWorld.PXTM, block);
+
+        lastBlock = block;
+    }
+
+    public void clearBlock() {
+        physicsWorld.clearBox();
+
+        for (Block block : blocks) {
+            screen.getGameStage().getRoot().removeActor(block.getActor());
+        }
+        blocks.removeAllElements();
+
+        lastBlock = null;
     }
 
     public void setScreen(GameScreen screen) {
@@ -35,5 +47,9 @@ public class BlockManager {
 
     public void setPhysicsWorld(PhysicsWorld physicsWorld) {
         this.physicsWorld = physicsWorld;
+    }
+
+    public Block getLastBlock() {
+        return lastBlock;
     }
 }

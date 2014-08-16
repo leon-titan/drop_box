@@ -133,6 +133,13 @@ public class PhysicsWorld implements InputProcessor {
         boxPoly.dispose();
     }
 
+    public void clearBox() {
+        for (Body body : bodies) {
+            world.destroyBody(body);
+        }
+        bodies.removeAllElements();
+    }
+
     public void render(){
         world.step(Gdx.graphics.getDeltaTime(), 8, 3);
         for (Body body : bodies) {
