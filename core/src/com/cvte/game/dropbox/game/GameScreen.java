@@ -3,9 +3,12 @@ package com.cvte.game.dropbox.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cvte.game.dropbox.BoxGame;
 
@@ -37,11 +40,12 @@ public class GameScreen implements Screen {
 
         gameStage = new Stage(new StretchViewport(BoxGame.GAME_SCREEN_WIDTH, BoxGame.GAME_SCREEN_HEIGHT));
 
-        bgActor = new BackgroundActor();
-        bgActor.setSize(gameStage.getWidth(), gameStage.getHeight());
-        bgActor.setPosition(0, 0);
+//        bgActor = new BackgroundActor();
+//        bgActor.setSize(gameStage.getWidth(), gameStage.getHeight());
+//        bgActor.setPosition(0, 0);
+        bgActor = new Image(new Texture("bg_01.png"));
 
-        gameStage.addActor(bgActor);
+//        gameStage.addActor(bgActor);
 
         physicsWorld = new PhysicsWorld();
 
@@ -62,7 +66,7 @@ public class GameScreen implements Screen {
             return;
         }
         state = State.START;
-//        riseGroup(170);
+        riseGroup(170);
     }
 
     public void end() {

@@ -8,15 +8,14 @@ import com.badlogic.gdx.graphics.Texture;
 public class Assets {
     public static Texture blockTexture;
 
-
     public static void  loadTexture(){
-        blockTexture = new Texture("block.png");
+        blockTexture = new Texture("item_chick_green.png");
         blockTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 
     public static void dispose(){
         if(blockTexture!=null){
-            blockTexture.dispose();;
+            blockTexture.dispose();
         }
     }
 }
