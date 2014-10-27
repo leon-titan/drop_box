@@ -9,7 +9,7 @@ public class Assets {
     public static Texture blockTexture;
 
     public static void  loadTexture(){
-        blockTexture = new Texture("item_chick_green.png");
+        blockTexture = new Texture("block.png");
         blockTexture.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
     }
 

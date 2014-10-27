@@ -44,8 +44,11 @@ public class GameScreen implements Screen {
 //        bgActor.setSize(gameStage.getWidth(), gameStage.getHeight());
 //        bgActor.setPosition(0, 0);
         bgActor = new Image(new Texture("bg_01.png"));
-
 //        gameStage.addActor(bgActor);
+
+        EndLine endLine = new EndLine();
+        endLine.getActor().setPosition(20, Block.SIZE * 6);//1020
+        gameStage.addActor(endLine.getActor());
 
         physicsWorld = new PhysicsWorld();
 
@@ -88,7 +91,7 @@ public class GameScreen implements Screen {
         gameStage.getRoot().setY(0);
         gameStage.getRoot().clearActions();
 
-        slideBlock.getActor().setPosition(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
+        slideBlock.getActor().setPosition(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4 + 25);
         slideBlock.getActor().clearActions();
         slideBlock.getActor().addAction(forever(sequence(
                 moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
@@ -117,7 +120,7 @@ public class GameScreen implements Screen {
         if (slideBlock != null) {
             return;
         }
-        slideBlock = new Block(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4);
+        slideBlock = new Block(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4 + 25);
         slideBlock.getActor().addAction(forever(sequence(
                 moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
                 moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f))));
