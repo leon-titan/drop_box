@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
 //        gameStage.addActor(bgActor);
 
         EndLine endLine = new EndLine();
-        endLine.getActor().setPosition(20, Block.SIZE * 6);//1020
+        endLine.setPosition(20, Block.SIZE * 6);//1020
         gameStage.addActor(endLine.getActor());
 
         physicsWorld = new PhysicsWorld();

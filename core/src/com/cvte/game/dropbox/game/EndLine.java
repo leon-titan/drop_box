@@ -14,6 +14,7 @@ public class EndLine {
     private static final float END_LINE_WIDTH = 55.3F;
 
     private Group group;
+    private PassEffect passEffect;
 
     public EndLine() {
         group = new Group();
@@ -26,6 +27,13 @@ public class EndLine {
 
             block.addAction(sequence(delay(i * 0.07f), forever(sequence(alpha(0.3f, 0.5f), delay(0.02f), alpha(0.7f, 0.5f), delay(0.02f)))));
         }
+        passEffect = new PassEffect();
+        passEffect.start();
+        group.addActor(passEffect);
+    }
+
+    public void setPosition(float x, float y){
+        group.setPosition(x, y);
     }
 
     public Actor getActor(){
