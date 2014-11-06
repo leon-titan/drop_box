@@ -1,5 +1,6 @@
 package com.cvte.game.dropbox.game;
 
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
@@ -25,7 +26,7 @@ public class EndLine {
             block.setPosition(i * END_LINE_WIDTH, 0);
             block.setColor(1, 1, 1, 0);
 
-            block.addAction(sequence(delay(i * 0.07f), forever(sequence(alpha(0.3f, 0.5f), delay(0.02f), alpha(0.7f, 0.5f), delay(0.02f)))));
+            block.addAction(sequence(delay(i * 0.07f), forever(sequence(alpha(0.3f, 0.5f, Interpolation.sine), delay(0.02f), alpha(0.7f, 0.5f, Interpolation.sine), delay(0.02f)))));
         }
         passEffect = new PassEffect();
         passEffect.start();

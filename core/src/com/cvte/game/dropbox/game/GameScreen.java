@@ -4,13 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.cvte.game.dropbox.BoxGame;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * Created by cvtpc on 2014/8/5.
@@ -92,8 +93,8 @@ public class GameScreen implements Screen {
         slideBlock.getActor().setPosition(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4 + 25);
         slideBlock.getActor().clearActions();
         slideBlock.getActor().addAction(forever(sequence(
-                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
-                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f))));
+                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f, Interpolation.sine),
+                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f, Interpolation.sine))));
 
         state = State.READY;
     }
@@ -120,8 +121,8 @@ public class GameScreen implements Screen {
         }
         slideBlock = new Block(0, BoxGame.GAME_SCREEN_HEIGHT * 3 / 4 + 25);
         slideBlock.getActor().addAction(forever(sequence(
-                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f),
-                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f))));
+                moveBy(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth(), 0, 1.5f, Interpolation.sine),
+                moveBy(-(BoxGame.GAME_SCREEN_WIDTH - slideBlock.getActor().getWidth()), 0, 1.5f, Interpolation.sine))));
         slideBlock.getActor().setColor(1, 1, 1, 0.5f);
         gameStage.addActor(slideBlock.getActor());
     }
