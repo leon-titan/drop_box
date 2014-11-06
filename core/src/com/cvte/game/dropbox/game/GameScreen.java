@@ -30,8 +30,6 @@ public class GameScreen implements Screen {
 
     private BlockManager blockManager;
 
-    private GameInput input;
-
     private Block slideBlock;
 
     private State state;
@@ -58,7 +56,7 @@ public class GameScreen implements Screen {
 
         addSlideBlock();
 
-        input = new GameInput(this);
+        GameInput input = new GameInput(this);
         Gdx.input.setInputProcessor(input);
 
         state = State.READY;

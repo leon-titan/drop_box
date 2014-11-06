@@ -32,7 +32,7 @@ public class GameInput extends InputAdapter {
     public boolean scrolled(int amount) {
         Group group = game.getGameStage().getRoot();
         group.setOriginX(BoxGame.GAME_SCREEN_WIDTH / 2);
-        group.setOriginY(-group.getY());
+//        group.setOriginY(-group.getY());
         if (amount > 0) {
             group.setScale(group.getScaleX() * 1.1f);
         } else {
